@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Warhammer 40k Rules Aide API
+  description: An API to manage Warhammer 40k army rosters and simulate combat.
+  version: v1.0.0
+servers:
+  - url: https://your-warhammer-project-name.vercel.app
+paths:
+  /api/add_unit_to_roster:
+    post:
+      summary: Add a Unit to a Roster
+      operationId: addUnitToRoster
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [unit_name]
+              properties:
+                unit_name:
+                  type: string
+                  description: The name of the unit to add (e.g., "Primaris Intercessor Squad").
+                roster_name:
+                  type: string
+                  description: "Optional name for the roster. Defaults to 'default_roster'."
+      responses:
+        "200": {description: "Unit added successfully."}
+  /api/view_roster:
+    get:
+      summary: View an Army Roster
+      operationId: viewRoster
+      parameters:
+        - name: roster_name
+          in: query
+          required: false
+          schema: {type: string}
+          description: "The name of the roster to view. Defaults to 'default_roster'."
+      responses:
+        "200": {description: "Roster data returned."}
+        "404": {description: "Roster not found."}
+  /api/simulate_combat:
+    post:
+      summary: Simulate a Combat Attack
+      operationId: simulateCombat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [attacks, skill, strength, toughness, save]
+              properties:
+                attacks: {type: integer, description: "Number of attack dice."}
+                skill: {type: integer, description: "Ballistic Skill or Weapon Skill (e.g., 3 for 3+)."}
+                strength: {type: integer, description: "Strength of the weapon."}
+                toughness: {type: integer, description: "Toughness of the target."}
+                save: {type: integer, description: "Save characteristic of the target (e.g., 4 for 4+)."}
+      responses:
+        "200": {description: "Combat simulation result."}
