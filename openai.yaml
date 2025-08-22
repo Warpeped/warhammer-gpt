@@ -4,7 +4,7 @@ info:
   description: An API to manage Warhammer 40k army rosters and simulate combat.
   version: v1.0.0
 servers:
-  - url: https://your-warhammer-project-name.vercel.app
+  - url: https://warhammer-gpt.vercel.app/
 paths:
   /api/add_unit_to_roster:
     post:
